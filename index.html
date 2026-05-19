@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LUMIÈRE — Premium Eyewear</title>
+<meta name="theme-color" content="#111111">
+<meta name="description" content="Premium eyewear and luxury frames with virtual try-on experience.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@200;300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+<style>
+/* ── Real photo cards ── */
+.product-img-wrap {
+  position: relative;
+  background: #f5f0e8;
+  overflow: hidden;
+  min-height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.product-real-photo {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+.product-card:hover .product-real-photo {
+  transform: scale(1.06);
+}
+
+/* Hero card images */
+.frame-img-placeholder {
+  overflow: hidden;
+  background: #f5f0e8;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 80px;
+}
+.frame-img-placeholder img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 10px;
+}
+
+/* Hero background image */
+.hero-bg-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  opacity: 0.38;
+}
+.hero-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(17,17,17,0.85) 0%, rgba(17,17,17,0.3) 60%, rgba(17,17,17,0.6) 100%);
+  z-index: 1;
+}
+.hero-noise { position: absolute; inset: 0; z-index: 2; }
+
+/* Category cards with real images */
+.cat-icon-wrap {
+  overflow: hidden;
+  border-radius: 12px;
+  position: relative;
+  width: 64px;
+  height: 48px;
+  margin: 0 auto 12px;
+}
+.cat-icon-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+.cat-card:hover .cat-icon-wrap img {
+  transform: scale(1.08);
+}
+
+/* Virtual try-on section */
+.tryon-real-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+  display: block;
+}
+.tryon-overlay-badge {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(17,17,17,0.75);
+  color: #fff;
+  font-size: 0.78rem;
+  padding: 6px 16px;
+  border-radius: 20px;
+  backdrop-filter: blur(8px);
+  white-space: nowrap;
+}
+
+/* Offer cards — photo backgrounds */
+.offer-card {
+  position: relative;
+  overflow: hidden;
+}
+.offer-card-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.18;
+  z-index: 0;
+}
+.offer-card > *:not(.offer-card-bg) {
+  position: relative;
+  z-index: 1;
+}
+
+/* Testimonial avatars */
+.test-avatar-img {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+/* Cart item image fix */
+.cart-item-img {
+  width: 130px;
+  height: 80px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.cart-item-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Checkout item image */
+.co-svg {
+  width: 72px;
+  height: 48px;
+  flex-shrink: 0;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.co-svg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Tryon frame thumb image */
+.tryon-svg-mini {
+  width: 84px;
+  height: 48px;
+  margin-bottom: 6px;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.tryon-svg-mini img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Detail page main image */
+.product-frame-display {
+  width: 100%;
+  max-width: 340px;
+  height: 200px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.product-frame-display img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Search result image */
+.sr-svg {
+  width: 80px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.sr-svg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+</style>
+</head>
+<body>
+
+<!-- Loading Skeleton -->
+<div id="page-loader">
+  <div class="loader-inner">
+    <div class="loader-logo">LUMIÈRE</div>
+    <div class="loader-bar"><div class="loader-fill"></div></div>
+  </div>
+</div>
+
+<!-- Sticky Nav -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <div class="nav-left">
+      <button class="nav-icon-btn" id="menu-toggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      <a href="#" class="nav-link hide-mobile">Eyeglasses</a>
+      <a href="#" class="nav-link hide-mobile">Sunglasses</a>
+      <a href="#" class="nav-link hide-mobile">Collections</a>
+    </div>
+    <a class="nav-logo" href="#">LUMIÈRE</a>
+    <div class="nav-right">
+      <button class="nav-icon-btn" id="search-toggle" aria-label="Search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </button>
+      <button class="nav-icon-btn" aria-label="Wishlist" onclick="showPage('wishlist')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        <span class="badge" id="wishlist-count">0</span>
+      </button>
+      <button class="nav-icon-btn" aria-label="Cart" onclick="showPage('cart')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <span class="badge" id="cart-count">0</span>
+      </button>
+      <button class="nav-icon-btn" id="theme-toggle" aria-label="Toggle theme">
+        <svg id="sun-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        <svg id="moon-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="btn-primary hide-mobile" onclick="showPage('login')">Sign In</button>
+    </div>
+  </div>
+  <div id="search-bar" class="search-bar">
+    <input type="text" id="search-input" placeholder="Search frames, brands, lens types…" oninput="handleSearch(this.value)">
+    <div id="search-results" class="search-results"></div>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div id="mobile-menu" class="mobile-menu">
+  <div class="mobile-menu-inner">
+    <a href="#" onclick="closeMobileMenu()">Eyeglasses</a>
+    <a href="#" onclick="closeMobileMenu()">Sunglasses</a>
+    <a href="#" onclick="closeMobileMenu()">Computer Glasses</a>
+    <a href="#" onclick="closeMobileMenu()">Kids Frames</a>
+    <a href="#" onclick="closeMobileMenu()">Premium Collections</a>
+    <div class="mobile-menu-divider"></div>
+    <a href="#" onclick="showPage('login'); closeMobileMenu()">Sign In / Register</a>
+    <a href="#" onclick="showPage('wishlist'); closeMobileMenu()">My Wishlist</a>
+    <a href="#" onclick="showPage('cart'); closeMobileMenu()">My Cart</a>
+    <a href="#" onclick="showPage('order-tracking'); closeMobileMenu()">Track Order</a>
+  </div>
+</div>
+
+<!-- ===== HOMEPAGE ===== -->
+<main id="page-home" class="page active">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg">
+      <img
+        class="hero-bg-img"
+        src="https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?w=1800&q=85&auto=format&fit=crop"
+        alt="Model wearing premium eyewear"
+        loading="eager"
+        onerror="this.src='https://images.unsplash.com/photo-1574258495973-f010dfbb5371?w=1800&q=85&auto=format&fit=crop'"
+      >
+      <div class="hero-gradient"></div>
+      <div class="hero-noise"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-text">
+        <p class="hero-eyebrow">New Collection 2025</p>
+        <h1 class="hero-title">See the World<br><em>Differently</em></h1>
+        <p class="hero-sub">Curated eyewear for the discerning eye. Premium frames, impeccable optics, effortless style.</p>
+        <div class="hero-actions">
+          <button class="btn-primary large" onclick="showPage('listing')">Try Your Perfect Frames</button>
+          <button class="btn-ghost large" onclick="document.getElementById('virtual-tryon').scrollIntoView({behavior:'smooth'})">Virtual Try-On</button>
+        </div>
+        <div class="hero-stats">
+          <div class="stat"><span class="stat-num">50K+</span><span class="stat-label">Happy Customers</span></div>
+          <div class="stat-divider"></div>
+          <div class="stat"><span class="stat-num">2000+</span><span class="stat-label">Frame Styles</span></div>
+          <div class="stat-divider"></div>
+          <div class="stat"><span class="stat-num">4.9★</span><span class="stat-label">Avg. Rating</span></div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-frame-showcase">
+
+          <!-- Card 1 — The Parisian (rectangular acetate) -->
+          <div class="frame-card-hero floating-1">
+            <div class="frame-img-placeholder fc1">
+              <img
+                src="https://images.unsplash.com/photo-1574258495973-f010dfbb5371?w=400&q=80&auto=format&fit=crop"
+                alt="The Parisian rectangular frames"
+              >
+            </div>
+            <p class="frame-card-name">The Parisian</p>
+            <p class="frame-card-price">₹4,299</p>
+          </div>
+
+          <!-- Card 2 — Milano Round (round gold frames) -->
+          <div class="frame-card-hero floating-2">
+            <div class="frame-img-placeholder fc2">
+              <img
+                src="https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=400&q=80&auto=format&fit=crop"
+                alt="Milano Round gold frames"
+              >
+            </div>
+            <p class="frame-card-name">Milano Round</p>
+            <p class="frame-card-price">₹3,799</p>
+          </div>
+
+          <!-- Card 3 — Tokyo Cat-Eye -->
+          <div class="frame-card-hero floating-3">
+            <div class="frame-img-placeholder fc3">
+              <img
+                src="https://images.unsplash.com/photo-1508296695146-257a814070b4?w=400&q=80&auto=format&fit=crop"
+                alt="Tokyo Cat-Eye frames"
+              >
+            </div>
+            <p class="frame-card-name">Tokyo Cat-Eye</p>
+            <p class="frame-card-price">₹5,499</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="hero-scroll-hint">
+      <span>Scroll to explore</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- Announcement Bar -->
+  <div class="announcement-bar">
+    <div class="announcement-track">
+      <span>Free shipping on orders above ₹999 &nbsp;·&nbsp; Use code LUMIERE20 for 20% off &nbsp;·&nbsp; EMI available at 0% interest &nbsp;·&nbsp; Try at home — Free &nbsp;·&nbsp; Free shipping on orders above ₹999 &nbsp;·&nbsp; Use code LUMIERE20 for 20% off &nbsp;·&nbsp; EMI available at 0% interest &nbsp;·&nbsp; Try at home — Free</span>
+    </div>
+  </div>
+
+  <!-- Categories — Contact Lenses card REMOVED -->
+  <section class="section categories-section">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-eyebrow">Shop by Category</p>
+        <h2 class="section-title">Find Your Perfect Style</h2>
+      </div>
+      <div class="categories-grid">
+
+        <!-- 1. Eyeglasses — rectangular acetate frames on surface -->
+        <div class="cat-card" onclick="showPage('listing')">
+          <div class="cat-icon-wrap c1">
+            <img
+              src="https://images.unsplash.com/photo-1574258495973-f010dfbb5371?w=300&q=80&auto=format&fit=crop"
+              alt="Eyeglasses"
+            >
+          </div>
+          <p class="cat-name">Eyeglasses</p>
+          <p class="cat-count">840+ styles</p>
+        </div>
+
+        <!-- 2. Sunglasses — aviator flat-lay -->
+        <div class="cat-card" onclick="showPage('listing')">
+          <div class="cat-icon-wrap c2">
+            <img
+              src="https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=300&q=80&auto=format&fit=crop"
+              alt="Sunglasses"
+            >
+          </div>
+          <p class="cat-name">Sunglasses</p>
+          <p class="cat-count">620+ styles</p>
+        </div>
+
+        <!-- 3. Computer Glasses — blue half-rim / screen glasses -->
+        <div class="cat-card" onclick="showPage('listing')">
+          <div class="cat-icon-wrap c3">
+            <img
+              src="https://images.unsplash.com/photo-1591076482161-42ce6da69f67?w=300&q=80&auto=format&fit=crop"
+              alt="Computer Glasses"
+            >
+          </div>
+          <p class="cat-name">Computer Glasses</p>
+          <p class="cat-count">320+ styles</p>
+        </div>
+
+        <!-- 4. Kids Frames — thin minimal / lightweight frames -->
+        <div class="cat-card" onclick="showPage('listing')">
+          <div class="cat-icon-wrap c5">
+            <img
+              src="https://images.unsplash.com/photo-1577803645773-f96470509666?w=300&q=80&auto=format&fit=crop"
+              alt="Kids Frames"
+            >
+          </div>
+          <p class="cat-name">Kids Frames</p>
+          <p class="cat-count">280+ styles</p>
+        </div>
+
+        <!-- 5. Premium Collection — geometric silver/gold frames -->
+        <div class="cat-card premium-cat" onclick="showPage('listing')">
+          <div class="cat-icon-wrap c6">
+            <img
+              src="https://images.unsplash.com/photo-1587400700819-0d2ea0bb3ee4?w=300&q=80&auto=format&fit=crop"
+              alt="Premium Collection"
+            >
+          </div>
+          <p class="cat-name">Premium Collection</p>
+          <p class="cat-count">Gold · Titanium · Luxury</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Virtual Try-On -->
+  <section class="section tryon-section" id="virtual-tryon">
+    <div class="container">
+      <div class="tryon-grid">
+        <div class="tryon-content">
+          <p class="section-eyebrow">AI-Powered Feature</p>
+          <h2 class="section-title">Try On Virtually</h2>
+          <p class="tryon-desc">See how any frame looks on your face before you buy. Our AI maps your face shape and overlays frames in real-time using your camera.</p>
+          <ul class="tryon-features">
+            <li><span class="check">✓</span> Real-time face mapping</li>
+            <li><span class="check">✓</span> 2000+ frames to try</li>
+            <li><span class="check">✓</span> Face shape analysis</li>
+            <li><span class="check">✓</span> Share your look</li>
+          </ul>
+          <button class="btn-primary" onclick="showModal('tryon-modal')">Launch Virtual Try-On</button>
+        </div>
+        <div class="tryon-visual">
+          <div class="tryon-mockup" style="height:380px;border-radius:16px;overflow:hidden;position:relative;">
+            <img
+              class="tryon-real-img"
+              src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&q=85&auto=format&fit=crop"
+              alt="Virtual try-on — eyewear on model"
+              style="width:100%;height:100%;object-fit:cover;border-radius:16px;"
+              onerror="this.src='https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=700&q=85&auto=format&fit=crop'"
+            >
+            <div class="tryon-overlay-badge">Face shape: Oval — Best matches found ✓</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Best Sellers (JS-injected) -->
+  <section class="section bestsellers-section">
+    <div class="container">
+      <div class="section-header flex-between">
+        <div>
+          <p class="section-eyebrow">Curated For You</p>
+          <h2 class="section-title">Best Sellers</h2>
+        </div>
+        <button class="btn-ghost" onclick="showPage('listing')">View All →</button>
+      </div>
+      <div class="products-carousel" id="bestsellers-carousel">
+        <!-- Injected by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- AI Recommendation Quiz -->
+  <section class="section ai-section">
+    <div class="container">
+      <div class="ai-card">
+        <div class="ai-header">
+          <div class="ai-badge">✦ AI</div>
+          <h2>Find Your Perfect Frame</h2>
+          <p>Answer a few questions and our AI recommends the ideal frames for your face shape, lifestyle, and prescription.</p>
+        </div>
+        <div class="ai-quiz" id="ai-quiz">
+          <div class="quiz-step active" data-step="1">
+            <p class="quiz-q">What's your face shape?</p>
+            <div class="quiz-options">
+              <button class="quiz-opt" onclick="quizSelect(this, 1)">Oval</button>
+              <button class="quiz-opt" onclick="quizSelect(this, 1)">Round</button>
+              <button class="quiz-opt" onclick="quizSelect(this, 1)">Square</button>
+              <button class="quiz-opt" onclick="quizSelect(this, 1)">Heart</button>
+              <button class="quiz-opt" onclick="quizSelect(this, 1)">Diamond</button>
+            </div>
+          </div>
+          <div class="quiz-step" data-step="2">
+            <p class="quiz-q">What's your primary use?</p>
+            <div class="quiz-options">
+              <button class="quiz-opt" onclick="quizSelect(this, 2)">Daily Wear</button>
+              <button class="quiz-opt" onclick="quizSelect(this, 2)">Work/Office</button>
+              <button class="quiz-opt" onclick="quizSelect(this, 2)">Sports</button>
+              <button class="quiz-opt" onclick="quizSelect(this, 2)">Fashion</button>
+            </div>
+          </div>
+          <div class="quiz-step" data-step="3">
+            <p class="quiz-q">Your budget range?</p>
+            <div class="quiz-options">
+              <button class="quiz-opt" onclick="quizSelect(this, 3)">Under ₹1500</button>
+              <button class="quiz-opt" onclick="quizSelect(this, 3)">₹1500–₹3000</button>
+              <button class="quiz-opt" onclick="quizSelect(this, 3)">₹3000–₹6000</button>
+              <button class="quiz-opt" onclick="quizSelect(this, 3)">₹6000+</button>
+            </div>
+          </div>
+          <div class="quiz-result" id="quiz-result" style="display:none">
+            <div class="quiz-result-inner">
+              <p class="result-label">✦ AI Recommendations Ready</p>
+              <p class="result-sub">Based on your profile, we found 12 perfect matches for you.</p>
+              <button class="btn-primary" onclick="showPage('listing')">View My Recommendations</button>
+            </div>
+          </div>
+        </div>
+        <div class="quiz-progress">
+          <div class="quiz-prog-bar"><div class="quiz-prog-fill" id="quiz-prog"></div></div>
+          <span id="quiz-prog-label">Step 1 of 3</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trending -->
+  <section class="section trending-section">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-eyebrow">What's Hot</p>
+        <h2 class="section-title">Trending Now</h2>
+      </div>
+      <div class="trending-grid" id="trending-grid">
+        <!-- Injected by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Offers Banner -->
+  <section class="offers-section">
+    <div class="container">
+      <div class="offers-grid">
+
+        <!-- BOGO — round gold frames bg -->
+        <div class="offer-card gold">
+          <img class="offer-card-bg" src="https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=600&q=70&auto=format&fit=crop" alt="">
+          <p class="offer-tag">Limited Time</p>
+          <h3>Buy 1 Get 1 Free</h3>
+          <p>On all eyeglasses frames. Use code <strong>BOGO2025</strong></p>
+          <button class="btn-offer" onclick="showPage('listing')">Shop Now →</button>
+        </div>
+
+        <!-- Premium Titanium — rimless bg -->
+        <div class="offer-card dark">
+          <img class="offer-card-bg" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=70&auto=format&fit=crop" alt="">
+          <p class="offer-tag">New Launch</p>
+          <h3>Premium Titanium Collection</h3>
+          <p>Ultra-light, ultra-durable. Starting at ₹7,999</p>
+          <button class="btn-offer" onclick="showPage('listing')">Explore →</button>
+        </div>
+
+        <!-- Student Offer — cat-eye / dark sunglasses bg -->
+        <div class="offer-card navy">
+          <img class="offer-card-bg" src="https://images.unsplash.com/photo-1508296695146-257a814070b4?w=600&q=70&auto=format&fit=crop" alt="">
+          <p class="offer-tag">Student Offer</p>
+          <h3>25% Off for Students</h3>
+          <p>Verify your student ID and save on every purchase</p>
+          <button class="btn-offer" onclick="showPage('listing')">Claim Offer →</button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="section testimonials-section">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-eyebrow">Customer Stories</p>
+        <h2 class="section-title">What Our Customers Say</h2>
+      </div>
+      <div class="testimonials-grid">
+
+        <div class="testimonial-card">
+          <div class="test-stars">★★★★★</div>
+          <p class="test-text">"The Parisian frames completely transformed my look. The quality is exceptional — lightweight titanium, perfect fit. LUMIÈRE is my go-to from now on."</p>
+          <div class="test-author">
+            <img class="test-avatar-img" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80&auto=format&fit=crop&crop=face" alt="Ananya Sharma">
+            <div><p class="test-name">Ananya Sharma</p><p class="test-loc">Mumbai · Verified Purchase</p></div>
+          </div>
+        </div>
+
+        <div class="testimonial-card featured">
+          <div class="test-stars">★★★★★</div>
+          <p class="test-text">"Virtual try-on is a game changer. Tried 30 frames in 10 minutes from my couch. The Milano Round frames arrived in 2 days, perfect lenses."</p>
+          <div class="test-author">
+            <img class="test-avatar-img" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80&auto=format&fit=crop&crop=face" alt="Rahul Mehta">
+            <div><p class="test-name">Rahul Mehta</p><p class="test-loc">Delhi · Verified Purchase</p></div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="test-stars">★★★★★</div>
+          <p class="test-text">"Blue-cut lenses changed everything. No more eye strain after 8 hours of screen time. The frames look stunning too — very editorial, very me."</p>
+          <div class="test-author">
+            <img class="test-avatar-img" src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=100&q=80&auto=format&fit=crop&crop=face" alt="Priya Nair">
+            <div><p class="test-name">Priya Nair</p><p class="test-loc">Bangalore · Verified Purchase</p></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Prescription Upload -->
+  <section class="section rx-section">
+    <div class="container">
+      <div class="rx-card">
+        <div class="rx-content">
+          <p class="section-eyebrow">Easy Process</p>
+          <h2>Upload Your Prescription</h2>
+          <p>Have your prescription handy? Upload it now and we'll pre-fill your lens details automatically.</p>
+          <div class="rx-steps">
+            <div class="rx-step"><span>1</span>Upload your Rx</div>
+            <div class="rx-arrow">→</div>
+            <div class="rx-step"><span>2</span>Choose frames</div>
+            <div class="rx-arrow">→</div>
+            <div class="rx-step"><span>3</span>Select lenses</div>
+            <div class="rx-arrow">→</div>
+            <div class="rx-step"><span>4</span>Delivered to you</div>
+          </div>
+          <label class="btn-primary rx-upload-btn">
+            Upload Prescription
+            <input type="file" accept=".pdf,.jpg,.png" style="display:none" onchange="handleRxUpload(this)">
+          </label>
+        </div>
+        <div class="rx-visual">
+          <div class="rx-doc-mockup">
+            <div class="rx-doc-header">Rx Prescription</div>
+            <div class="rx-doc-row"><span>SPH (R)</span><span>-1.75</span></div>
+            <div class="rx-doc-row"><span>CYL (R)</span><span>-0.50</span></div>
+            <div class="rx-doc-row"><span>AXIS (R)</span><span>180°</span></div>
+            <div class="rx-doc-row"><span>SPH (L)</span><span>-2.00</span></div>
+            <div class="rx-doc-row"><span>ADD</span><span>+1.00</span></div>
+            <div class="rx-doc-badge">✓ Verified</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter -->
+  <section class="section newsletter-section">
+    <div class="container">
+      <div class="newsletter-card">
+        <h2>Stay in the Loop</h2>
+        <p>New arrivals, exclusive offers, and style guides — delivered to your inbox.</p>
+        <div class="newsletter-form">
+          <input type="email" placeholder="Your email address" class="newsletter-input">
+          <button class="btn-primary" onclick="handleNewsletter()">Subscribe</button>
+        </div>
+        <p class="newsletter-note">No spam. Unsubscribe anytime. We respect your privacy.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <p class="footer-logo">LUMIÈRE</p>
+          <p class="footer-tagline">Premium eyewear for those who see the world differently.</p>
+          <div class="social-links">
+            <a href="#" class="social-link">Ig</a>
+            <a href="#" class="social-link">Fb</a>
+            <a href="#" class="social-link">Tw</a>
+            <a href="#" class="social-link">Yt</a>
+            <a href="#" class="social-link">Pi</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <p class="footer-col-title">Shop</p>
+          <a href="#">Eyeglasses</a>
+          <a href="#">Sunglasses</a>
+          <a href="#">Computer Glasses</a>
+          <a href="#">Kids Frames</a>
+          <a href="#">Premium Collection</a>
+        </div>
+        <div class="footer-col">
+          <p class="footer-col-title">Support</p>
+          <a href="#">Virtual Try-On</a>
+          <a href="#">Lens Guide</a>
+          <a href="#">Frame Sizing</a>
+          <a href="#" onclick="showPage('order-tracking')">Track Order</a>
+          <a href="#">Returns & Exchange</a>
+          <a href="#">Contact Us</a>
+        </div>
+        <div class="footer-col">
+          <p class="footer-col-title">Company</p>
+          <a href="#">About Us</a>
+          <a href="#">Careers</a>
+          <a href="#">Press</a>
+          <a href="#">Blog</a>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 LUMIÈRE Eyewear Pvt. Ltd. All rights reserved.</p>
+        <div class="payment-icons">
+          <span class="pay-icon">Visa</span>
+          <span class="pay-icon">MC</span>
+          <span class="pay-icon">UPI</span>
+          <span class="pay-icon">GPay</span>
+          <span class="pay-icon">EMI</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+</main>
+
+<!-- ===== PRODUCT LISTING PAGE ===== -->
+<main id="page-listing" class="page">
+  <div class="page-hero-mini">
+    <div class="container">
+      <p class="breadcrumb"><a href="#" onclick="showPage('home')">Home</a> / All Eyewear</p>
+      <h1>All Eyewear</h1>
+      <p>2,000+ styles curated for every face and lifestyle</p>
+    </div>
+  </div>
+  <div class="listing-layout container">
+    <aside class="filters-sidebar" id="filters-sidebar">
+      <div class="filters-header">
+        <h3>Filters</h3>
+        <button class="clear-filters" onclick="clearFilters()">Clear All</button>
+      </div>
+      <div class="filter-group">
+        <p class="filter-label">Price Range</p>
+        <div class="price-range">
+          <input type="range" min="0" max="15000" value="15000" id="price-range" oninput="updatePriceFilter(this.value)">
+          <div class="price-labels"><span>₹0</span><span id="price-max-label">₹15,000</span></div>
+        </div>
+      </div>
+      <div class="filter-group">
+        <p class="filter-label">Frame Shape</p>
+        <div class="filter-chips">
+          <label class="chip"><input type="checkbox" onchange="applyFilters()"> Rectangular</label>
+          <label class="chip"><input type="checkbox" onchange="applyFilters()"> Round</label>
+          <label class="chip"><input type="checkbox" onchange="applyFilters()"> Cat-Eye</label>
+          <label class="chip"><input type="checkbox" onchange="applyFilters()"> Aviator</label>
+          <label class="chip"><input type="checkbox" onchange="applyFilters()"> Wayfarer</label>
+          <label class="chip"><input type="checkbox" onchange="applyFilters()"> Geometric</label>
+        </div>
+      </div>
+      <div class="filter-group">
+        <p class="filter-label">Gender</p>
+        <div class="filter-chips">
+          <label class="chip"><input type="checkbox" onchange="applyFilters()"> Men</label>
+          <label class="chip"><input type="checkbox" onchange="applyFilters()"> Women</label>
+          <label class="chip"><input type="checkbox" onchange="applyFilters()"> Unisex</label>
+        </div>
+      </div>
+      <div class="filter-group">
+        <p class="filter-label">Frame Color</p>
+        <div class="color-swatches">
+          <div class="color-swatch" style="background:#1a1a1a" title="Black" onclick="toggleSwatch(this)"></div>
+          <div class="color-swatch" style="background:#8B6914" title="Tortoise" onclick="toggleSwatch(this)"></div>
+          <div class="color-swatch" style="background:#c0c0c0" title="Silver" onclick="toggleSwatch(this)"></div>
+          <div class="color-swatch" style="background:#c9a84c" title="Gold" onclick="toggleSwatch(this)"></div>
+          <div class="color-swatch" style="background:#1a3a5c" title="Navy" onclick="toggleSwatch(this)"></div>
+          <div class="color-swatch" style="background:#8B0000" title="Red" onclick="toggleSwatch(this)"></div>
+          <div class="color-swatch" style="background:#f5f0e8;border:1px solid #ccc" title="Clear" onclick="toggleSwatch(this)"></div>
+          <div class="color-swatch" style="background:#4a7c59" title="Green" onclick="toggleSwatch(this)"></div>
+        </div>
+      </div>
+      <div class="filter-group">
+        <p class="filter-label">Material</p>
+        <div class="filter-chips">
+          <label class="chip"><input type="checkbox" onchange="applyFilters()"> Acetate</label>
+          <label class="chip"><input type="checkbox" onchange="applyFilters()"> Titanium</label>
+          <label class="chip"><input type="checkbox" onchange="applyFilters()"> Stainless Steel</label>
+          <label class="chip"><input type="checkbox" onchange="applyFilters()"> TR90</label>
+          <label class="chip"><input type="checkbox" onchange="applyFilters()"> Wood</label>
+        </div>
+      </div>
+      <div class="filter-group">
+        <p class="filter-label">Brand</p>
+        <div class="filter-chips">
+          <label class="chip"><input type="checkbox" onchange="applyFilters()"> Ray-Ban</label>
+          <label class="chip"><input type="checkbox" onchange="applyFilters()"> Oakley</label>
+          <label class="chip"><input type="checkbox" onchange="applyFilters()"> Lumière</label>
+          <label class="chip"><input type="checkbox" onchange="applyFilters()"> Titan</label>
+          <label class="chip"><input type="checkbox" onchange="applyFilters()"> Vogue</label>
+          <label class="chip"><input type="checkbox" onchange="applyFilters()"> John Jacobs</label>
+        </div>
+      </div>
+      <div class="filter-group">
+        <p class="filter-label">Rim Type</p>
+        <div class="filter-chips">
+          <label class="chip"><input type="checkbox" onchange="applyFilters()"> Full Rim</label>
+          <label class="chip"><input type="checkbox" onchange="applyFilters()"> Half Rim</label>
+          <label class="chip"><input type="checkbox" onchange="applyFilters()"> Rimless</label>
+        </div>
+      </div>
+      <div class="filter-group">
+        <p class="filter-label">Lens Type</p>
+        <div class="filter-chips">
+          <label class="chip"><input type="checkbox" onchange="applyFilters()"> Blue Cut</label>
+          <label class="chip"><input type="checkbox" onchange="applyFilters()"> Anti-Glare</label>
+          <label class="chip"><input type="checkbox" onchange="applyFilters()"> UV Protection</label>
+          <label class="chip"><input type="checkbox" onchange="applyFilters()"> Polarized</label>
+          <label class="chip"><input type="checkbox" onchange="applyFilters()"> Photochromic</label>
+        </div>
+      </div>
+      <div class="filter-group">
+        <p class="filter-label">Face Shape Compatibility</p>
+        <div class="filter-chips">
+          <label class="chip"><input type="checkbox" onchange="applyFilters()"> Oval</label>
+          <label class="chip"><input type="checkbox" onchange="applyFilters()"> Round</label>
+          <label class="chip"><input type="checkbox" onchange="applyFilters()"> Square</label>
+          <label class="chip"><input type="checkbox" onchange="applyFilters()"> Heart</label>
+          <label class="chip"><input type="checkbox" onchange="applyFilters()"> Diamond</label>
+        </div>
+      </div>
+    </aside>
+
+    <div class="listing-main">
+      <div class="listing-toolbar">
+        <div class="listing-count" id="listing-count">Showing 8 products</div>
+        <div class="listing-controls">
+          <select class="sort-select" onchange="sortProducts(this.value)">
+            <option>Featured</option>
+            <option>Price: Low to High</option>
+            <option>Price: High to Low</option>
+            <option>Newest First</option>
+            <option>Best Rated</option>
+            <option>Most Popular</option>
+          </select>
+          <button class="filter-toggle-btn" onclick="toggleFilterSidebar()">⊞ Filters</button>
+        </div>
+      </div>
+      <div class="products-grid" id="products-grid">
+        <!-- Injected by JS -->
+      </div>
+      <div class="load-more-wrap">
+        <button class="btn-ghost" onclick="loadMore()">Load More Products</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- ===== PRODUCT DETAIL PAGE ===== -->
+<main id="page-detail" class="page">
+  <div class="container">
+    <p class="breadcrumb" style="margin-top:100px"><a href="#" onclick="showPage('home')">Home</a> / <a href="#" onclick="showPage('listing')">Eyewear</a> / <span id="detail-breadcrumb">Product</span></p>
+    <div class="detail-grid">
+      <div class="detail-images">
+        <div class="detail-main-img" id="detail-main-img">
+          <div class="product-frame-display" id="detail-frame-svg"></div>
+          <div class="img-zoom-hint">Hover to zoom</div>
+          <span class="live-badge" id="detail-live-badge">● 12 left in stock</span>
+        </div>
+        <div class="detail-thumbnails" id="detail-thumbnails">
+          <div class="thumb active">Front</div>
+          <div class="thumb">Side</div>
+          <div class="thumb">Close-up</div>
+          <div class="thumb">On-Model</div>
+        </div>
+        <button class="tryon-inline-btn" onclick="showModal('tryon-modal')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/></svg>
+          Virtual Try-On
+        </button>
+      </div>
+      <div class="detail-info">
+        <div class="detail-brand" id="detail-brand">LUMIÈRE</div>
+        <h1 class="detail-name" id="detail-name">The Parisian</h1>
+        <div class="detail-rating">
+          <span class="stars">★★★★★</span>
+          <span class="rating-num" id="detail-rating">4.8</span>
+          <span class="rating-count">(342 reviews)</span>
+        </div>
+        <div class="detail-price-row">
+          <span class="detail-price" id="detail-price">₹4,299</span>
+          <span class="detail-original" id="detail-original">₹6,999</span>
+          <span class="detail-discount" id="detail-discount">38% OFF</span>
+        </div>
+        <p class="detail-inclusive">Inclusive of taxes · Free shipping · Free lens included</p>
+        <div class="detail-section">
+          <p class="detail-section-label">Frame Color</p>
+          <div class="color-select" id="detail-colors">
+            <div class="color-opt active" style="background:#1a1a1a" onclick="selectColor(this, 'Matte Black')"></div>
+            <div class="color-opt" style="background:#8B6914" onclick="selectColor(this, 'Tortoise Brown')"></div>
+            <div class="color-opt" style="background:#c9a84c" onclick="selectColor(this, 'Gold')"></div>
+            <div class="color-opt" style="background:#1a3a5c" onclick="selectColor(this, 'Navy Blue')"></div>
+          </div>
+          <p class="selected-color-label" id="selected-color">Matte Black</p>
+        </div>
+        <div class="detail-section">
+          <p class="detail-section-label">Select Lens Type</p>
+          <div class="lens-options">
+            <label class="lens-opt"><input type="radio" name="lens" value="zero"> <span>Zero Power (No Rx)</span></label>
+            <label class="lens-opt"><input type="radio" name="lens" value="bluecut" checked> <span>Blue Cut Lenses <em>+₹500</em></span></label>
+            <label class="lens-opt"><input type="radio" name="lens" value="antiglare"> <span>Anti-Glare <em>+₹800</em></span></label>
+            <label class="lens-opt"><input type="radio" name="lens" value="progressive"> <span>Progressive <em>+₹2500</em></span></label>
+            <label class="lens-opt"><input type="radio" name="lens" value="photochromic"> <span>Photochromic <em>+₹1800</em></span></label>
+          </div>
+        </div>
+        <div class="detail-actions">
+          <button class="btn-primary large full-width" id="detail-add-cart" onclick="addToCart(currentProduct)">Add to Cart</button>
+          <button class="btn-secondary large full-width" onclick="buyNow(currentProduct)">Buy Now</button>
+          <button class="btn-icon-outline" id="detail-wishlist-btn" onclick="toggleWishlist(currentProduct, this)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </button>
+        </div>
+        <div class="emi-banner">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          EMI from ₹358/month · 0% interest · No cost EMI available
+        </div>
+        <div class="delivery-info">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+          Estimated delivery: <strong id="delivery-date">Wed, 21 May 2025</strong> · Free
+        </div>
+        <div class="specs-accordion">
+          <div class="spec-item">
+            <button class="spec-toggle" onclick="toggleSpec(this)">Frame Details <span>+</span></button>
+            <div class="spec-content">
+              <table class="spec-table">
+                <tr><td>Frame Shape</td><td id="spec-shape">Rectangular</td></tr>
+                <tr><td>Material</td><td id="spec-material">Premium Acetate</td></tr>
+                <tr><td>Rim Type</td><td>Full Rim</td></tr>
+                <tr><td>Hinge Type</td><td>Spring Hinge</td></tr>
+                <tr><td>Weight</td><td>18g</td></tr>
+                <tr><td>Dimensions</td><td>52-18-140mm</td></tr>
+                <tr><td>Face Shape</td><td id="spec-face">Oval, Oblong, Square</td></tr>
+              </table>
+            </div>
+          </div>
+          <div class="spec-item">
+            <button class="spec-toggle" onclick="toggleSpec(this)">Lens Details <span>+</span></button>
+            <div class="spec-content">
+              <table class="spec-table">
+                <tr><td>Lens Type</td><td>Blue Cut Anti-Glare</td></tr>
+                <tr><td>Lens Index</td><td>1.56</td></tr>
+                <tr><td>Lens Material</td><td>Polycarbonate</td></tr>
+                <tr><td>Scratch Resistance</td><td>Yes (Multi-coat)</td></tr>
+                <tr><td>UV Protection</td><td>UV400</td></tr>
+                <tr><td>Water Resistance</td><td>Hydrophobic Coat</td></tr>
+                <tr><td>Warranty</td><td>1 Year Manufacturer</td></tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="reviews-section">
+      <h2>Customer Reviews</h2>
+      <div class="reviews-overview">
+        <div class="rating-big">4.8</div>
+        <div class="rating-bars">
+          <div class="rating-bar-row"><span>5★</span><div class="rbar"><div class="rbar-fill" style="width:78%"></div></div><span>78%</span></div>
+          <div class="rating-bar-row"><span>4★</span><div class="rbar"><div class="rbar-fill" style="width:14%"></div></div><span>14%</span></div>
+          <div class="rating-bar-row"><span>3★</span><div class="rbar"><div class="rbar-fill" style="width:5%"></div></div><span>5%</span></div>
+          <div class="rating-bar-row"><span>2★</span><div class="rbar"><div class="rbar-fill" style="width:2%"></div></div><span>2%</span></div>
+          <div class="rating-bar-row"><span>1★</span><div class="rbar"><div class="rbar-fill" style="width:1%"></div></div><span>1%</span></div>
+        </div>
+      </div>
+      <div class="reviews-list">
+        <div class="review-card">
+          <div class="review-top"><span class="review-stars">★★★★★</span><span class="review-date">2 May 2025</span></div>
+          <p class="review-title">Absolutely love these frames!</p>
+          <p class="review-text">The quality is exceptional. Lightweight, comfortable, and exactly as pictured. The blue-cut lenses have made a huge difference to my eye fatigue. Highly recommend.</p>
+          <p class="review-author">— Karan P. · Verified Purchase</p>
+        </div>
+        <div class="review-card">
+          <div class="review-top"><span class="review-stars">★★★★★</span><span class="review-date">28 Apr 2025</span></div>
+          <p class="review-title">Perfect gift for myself</p>
+          <p class="review-text">Been wearing cheap glasses for years. Finally splurged on these and I can't believe the difference. The titanium feels so premium, and the spring hinges are satisfying to use.</p>
+          <p class="review-author">— Divya M. · Verified Purchase</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="similar-section">
+      <h2>You May Also Like</h2>
+      <div class="products-carousel" id="similar-products"></div>
+    </div>
+  </div>
+</main>
+
+<!-- ===== CART PAGE ===== -->
+<main id="page-cart" class="page">
+  <div class="container" style="padding-top:100px">
+    <h1 class="page-title">My Cart</h1>
+    <div class="cart-layout">
+      <div class="cart-items" id="cart-items"></div>
+      <div class="cart-summary" id="cart-summary"></div>
+    </div>
+  </div>
+</main>
+
+<!-- ===== WISHLIST PAGE ===== -->
+<main id="page-wishlist" class="page">
+  <div class="container" style="padding-top:100px">
+    <h1 class="page-title">My Wishlist</h1>
+    <div class="products-grid" id="wishlist-grid"></div>
+  </div>
+</main>
+
+<!-- ===== LOGIN PAGE ===== -->
+<main id="page-login" class="page">
+  <div class="auth-wrapper">
+    <div class="auth-card">
+      <div class="auth-logo">LUMIÈRE</div>
+      <div class="auth-tabs">
+        <button class="auth-tab active" onclick="switchAuth('login', this)">Sign In</button>
+        <button class="auth-tab" onclick="switchAuth('signup', this)">Create Account</button>
+      </div>
+      <div id="login-form" class="auth-form">
+        <div class="form-group"><label>Email Address</label><input type="email" placeholder="you@example.com" class="form-input"></div>
+        <div class="form-group"><label>Password</label><input type="password" placeholder="Your password" class="form-input"></div>
+        <div class="form-options">
+          <label class="remember"><input type="checkbox"> Remember me</label>
+          <a href="#">Forgot password?</a>
+        </div>
+        <button class="btn-primary full-width large" onclick="handleLogin()">Sign In</button>
+        <div class="auth-divider"><span>or continue with</span></div>
+        <div class="social-auth">
+          <button class="social-auth-btn">Google</button>
+          <button class="social-auth-btn">Apple</button>
+        </div>
+      </div>
+      <div id="signup-form" class="auth-form" style="display:none">
+        <div class="form-group"><label>Full Name</label><input type="text" placeholder="Your name" class="form-input"></div>
+        <div class="form-group"><label>Email Address</label><input type="email" placeholder="you@example.com" class="form-input"></div>
+        <div class="form-group"><label>Mobile Number</label><input type="tel" placeholder="+91 XXXXX XXXXX" class="form-input"></div>
+        <div class="form-group"><label>Password</label><input type="password" placeholder="Create a strong password" class="form-input"></div>
+        <button class="btn-primary full-width large" onclick="handleSignup()">Create Account</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- ===== ORDER TRACKING PAGE ===== -->
+<main id="page-order-tracking" class="page">
+  <div class="container" style="padding-top:100px; max-width:700px">
+    <h1 class="page-title">Track Your Order</h1>
+    <div class="track-input-row">
+      <input type="text" placeholder="Enter Order ID (e.g. LUM-20240518)" class="form-input" id="order-id-input">
+      <button class="btn-primary" onclick="trackOrder()">Track</button>
+    </div>
+    <div class="track-result" id="track-result" style="display:none">
+      <div class="track-order-id">Order #LUM-20240518 · Placed 14 May 2025</div>
+      <div class="track-steps">
+        <div class="track-step done"><div class="track-dot"></div><div class="track-info"><strong>Order Placed</strong><span>14 May, 10:32 AM</span></div></div>
+        <div class="track-step done"><div class="track-dot"></div><div class="track-info"><strong>Processing</strong><span>14 May, 2:00 PM — Lenses being fitted</span></div></div>
+        <div class="track-step done"><div class="track-dot"></div><div class="track-info"><strong>Shipped</strong><span>15 May, 9:00 AM — Blue Dart AWB #123456789</span></div></div>
+        <div class="track-step active"><div class="track-dot"></div><div class="track-info"><strong>Out for Delivery</strong><span>17 May — Expected by 8:00 PM</span></div></div>
+        <div class="track-step"><div class="track-dot"></div><div class="track-info"><strong>Delivered</strong><span>Pending</span></div></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- ===== MODALS ===== -->
+
+<!-- Virtual Try-On Modal -->
+<div id="tryon-modal" class="modal-overlay" onclick="closeModal('tryon-modal')">
+  <div class="modal" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal('tryon-modal')">✕</button>
+    <h2>Virtual Try-On</h2>
+    <p class="modal-sub">Enable camera access to see frames on your face in real-time.</p>
+    <div class="tryon-camera-mockup">
+      <div class="camera-placeholder">
+        <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        <p>Camera access required</p>
+        <button class="btn-primary" onclick="alert('Virtual try-on would launch here in production')">Enable Camera</button>
+      </div>
+    </div>
+    <div class="tryon-frame-picker">
+      <p>Or pick a frame to preview:</p>
+      <div class="tryon-frame-list" id="tryon-frames"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Checkout Modal -->
+<div id="checkout-modal" class="modal-overlay" onclick="closeModal('checkout-modal')">
+  <div class="modal large-modal" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal('checkout-modal')">✕</button>
+    <h2>Checkout</h2>
+    <div class="checkout-grid">
+      <div class="checkout-form">
+        <h3>Delivery Address</h3>
+        <div class="form-row">
+          <div class="form-group"><label>First Name</label><input type="text" class="form-input" placeholder="Rahul"></div>
+          <div class="form-group"><label>Last Name</label><input type="text" class="form-input" placeholder="Sharma"></div>
+        </div>
+        <div class="form-group"><label>Phone</label><input type="tel" class="form-input" placeholder="+91 98765 43210"></div>
+        <div class="form-group"><label>Address</label><input type="text" class="form-input" placeholder="House No., Street, Area"></div>
+        <div class="form-row">
+          <div class="form-group"><label>City</label><input type="text" class="form-input" placeholder="Mumbai"></div>
+          <div class="form-group"><label>PIN Code</label><input type="text" class="form-input" placeholder="400001"></div>
+        </div>
+        <h3 style="margin-top:1.5rem">Payment Method</h3>
+        <div class="payment-methods">
+          <label class="pay-opt"><input type="radio" name="pay" checked> UPI / GPay / PhonePe</label>
+          <label class="pay-opt"><input type="radio" name="pay"> Credit / Debit Card</label>
+          <label class="pay-opt"><input type="radio" name="pay"> Net Banking</label>
+          <label class="pay-opt"><input type="radio" name="pay"> Cash on Delivery</label>
+          <label class="pay-opt"><input type="radio" name="pay"> 0% EMI</label>
+        </div>
+        <button class="btn-primary full-width large" style="margin-top:1.5rem" onclick="placeOrder()">Place Order →</button>
+      </div>
+      <div class="checkout-summary" id="checkout-summary"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Quick View Modal -->
+<div id="quickview-modal" class="modal-overlay" onclick="closeModal('quickview-modal')">
+  <div class="modal" onclick="event.stopPropagation()" id="quickview-content">
+    <button class="modal-close" onclick="closeModal('quickview-modal')">✕</button>
+  </div>
+</div>
+
+<!-- Toast Notification -->
+<div id="toast" class="toast"></div>
+
+<!-- Floating Support -->
+<button class="float-support" onclick="showModal('support-modal')" title="Customer Support">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+</button>
+
+<!-- Support Modal -->
+<div id="support-modal" class="modal-overlay" onclick="closeModal('support-modal')">
+  <div class="modal support-modal-inner" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal('support-modal')">✕</button>
+    <div class="support-header">
+      <div class="support-avatar">L</div>
+      <div><h3>LUMIÈRE Support</h3><p class="online-indicator">● Online — replies in minutes</p></div>
+    </div>
+    <div class="support-chat" id="support-chat">
+      <div class="chat-bubble bot">Hi! 👋 Welcome to LUMIÈRE. How can I help you today?</div>
+    </div>
+    <div class="support-options">
+      <button onclick="supportOption('Track my order')">Track Order</button>
+      <button onclick="supportOption('Return/Exchange')">Returns</button>
+      <button onclick="supportOption('Prescription help')">Prescription Help</button>
+      <button onclick="supportOption('Talk to an agent')">Talk to Agent</button>
+    </div>
+    <div class="support-input-row">
+      <input type="text" id="support-input" placeholder="Type your message…" onkeydown="if(event.key==='Enter') sendSupportMsg()">
+      <button onclick="sendSupportMsg()">→</button>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
